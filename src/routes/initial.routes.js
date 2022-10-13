@@ -1,5 +1,6 @@
 /* ============= INICIO DE ROUTEO ============= */
 import express from 'express';
+import fs from 'fs'
 const routerInitial = express.Router();
 
 /* ============ Creacion de objeto ============ */
@@ -36,13 +37,10 @@ routerInitial.get('/login', async (req, res) => {
 })
 
 routerInitial.get('/logout', async (req, res) => {
-    req.session.destroy(error=>{
-        if(error) {
-            res.json({error})
-        } else {
-            res.render('logout')
-        }
-    })
+    req.session.destroy( error => console.log(error) )
+    setTimeout(()=>{
+        res.redirect('/login')
+    }, 5000)
 })
 
 routerInitial.get('/api/productos-test', auth, async (req, res) => {
